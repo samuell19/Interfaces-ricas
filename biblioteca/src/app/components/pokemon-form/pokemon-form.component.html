@@ -1,0 +1,18 @@
+<div class="p-fluid">
+  <div class="p-field">
+    <label>Nome</label>
+    <input pInputText [(ngModel)]="pokemon.nome" />
+  </div>
+
+  <div class="p-field">
+    <label>Tipo</label>
+    <input pInputText [(ngModel)]="pokemon.tipo" />
+  </div>
+
+  <div class="p-field-checkbox">
+    <p-checkbox [(ngModel)]="pokemon.capturado" binary="true" inputId="capturado"></p-checkbox>
+    <label for="capturado">Capturado</label>
+  </div>
+
+  <button pButton label="Salvar" (click)="salvar()" class="p-button-success"></button>
+</div>
