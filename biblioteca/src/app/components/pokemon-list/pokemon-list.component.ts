@@ -6,11 +6,13 @@ import { PokemonService } from '../../services/pokemon.service';
 import { TableModule } from 'primeng/table';
 import { ButtonModule } from 'primeng/button';
 import { TagModule } from 'primeng/tag';
+import { RouterModule } from '@angular/router';
+
 
 @Component({
   selector: 'app-pokemon-list',
   standalone: true,
-  imports: [CommonModule, TableModule, ButtonModule, TagModule],
+  imports: [CommonModule, TableModule, ButtonModule, TagModule, RouterModule],
   templateUrl: './pokemon-list.component.html'
 })
 export class PokemonListComponent implements OnInit {

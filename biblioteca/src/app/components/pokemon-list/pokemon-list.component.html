@@ -4,7 +4,8 @@
       <th>Nome</th>
       <th>Tipo</th>
       <th>Capturado</th>
-      <th>Ações</th>
+      <th>Excluir</th>
+      <th>Editar</th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-pokemon>
@@ -16,6 +17,10 @@
       </td>
       <td>
         <button pButton icon="pi pi-trash" (click)="remover(pokemon.id)" class="p-button-danger" label="Excluir"></button>
+      </td>
+      <td>
+        <button pButton label="Editar" icon="pi pi-pencil" class="p-button-warning"
+        [routerLink]="['/editar', pokemon.id]"></button>
       </td>
     </tr>
   </ng-template>
