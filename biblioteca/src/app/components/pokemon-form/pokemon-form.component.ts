@@ -7,11 +7,19 @@ import { PokemonService } from '../../services/pokemon.service';
 import { InputTextModule } from 'primeng/inputtext';
 import { CheckboxModule } from 'primeng/checkbox';
 import { ButtonModule } from 'primeng/button';
+import { DropdownModule } from 'primeng/dropdown';
 
 @Component({
   selector: 'app-pokemon-form',
   standalone: true,
-  imports: [CommonModule, FormsModule, InputTextModule, CheckboxModule, ButtonModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    InputTextModule,
+    CheckboxModule,
+    ButtonModule,
+    DropdownModule
+  ],
   templateUrl: './pokemon-form.component.html'
 })
 export class PokemonFormComponent {
@@ -21,6 +29,15 @@ export class PokemonFormComponent {
     tipo: '',
     capturado: false
   };
+
+  tipos = [
+    { name: 'Fogo', value: 'Fogo' },
+    { name: 'Água', value: 'Água' },
+    { name: 'Grama', value: 'Grama' },
+    { name: 'Elétrico', value: 'Elétrico' },
+    { name: 'Pedra', value: 'Pedra' },
+    { name: 'Fantasma', value: 'Fantasma' },
+  ];
 
   constructor(private pokemonService: PokemonService) {}
 

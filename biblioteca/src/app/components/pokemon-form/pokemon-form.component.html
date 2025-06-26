@@ -1,18 +1,29 @@
-<div class="p-fluid">
+  <div class="p-fluid">
   <div class="p-field">
-    <label>Nome</label>
-    <input pInputText [(ngModel)]="pokemon.nome" />
+    <label for="nome">Nome</label>
+    <input id="nome" pInputText [(ngModel)]="pokemon.nome" />
   </div>
 
   <div class="p-field">
-    <label>Tipo</label>
-    <input pInputText [(ngModel)]="pokemon.tipo" />
+    <label for="tipo">Tipo</label>
+    <p-dropdown
+      inputId="tipo"
+      [options]="tipos"
+      [(ngModel)]="pokemon.tipo"
+      optionLabel="name"
+      optionValue="value"
+      [filter]="true"
+      filterBy="name"
+      [showClear]="true"
+      placeholder="Selecione um tipo"
+      class="w-full">
+    </p-dropdown>
   </div>
 
-  <div class="p-field-checkbox">
+  <div class="p-field-checkbox mt-3">
     <p-checkbox [(ngModel)]="pokemon.capturado" binary="true" inputId="capturado"></p-checkbox>
-    <label for="capturado">Capturado</label>
+    <label for="capturado" class="ml-2">Capturado</label>
   </div>
 
-  <button pButton label="Salvar" (click)="salvar()" class="p-button-success"></button>
+  <button pButton label="Salvar" (click)="salvar()" class="p-button-success mt-4"></button>
 </div>
