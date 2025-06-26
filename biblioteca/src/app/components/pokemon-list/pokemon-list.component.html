@@ -1,8 +1,10 @@
 <p-table [value]="pokemons">
   <ng-template pTemplate="header">
     <tr>
+      <th>ID</th>
       <th>Nome</th>
       <th>Tipo</th>
+      <th>Número na Pokédex</th>
       <th>Capturado</th>
       <th>Excluir</th>
       <th>Editar</th>
@@ -10,13 +12,15 @@
   </ng-template>
   <ng-template pTemplate="body" let-pokemon>
     <tr>
+      <td>{{pokemon.id}}</td>
       <td>{{pokemon.nome}}</td>
       <td>{{pokemon.tipo}}</td>
+      <td>{{pokemon.numero_pokedex}}</td>
       <td>
         <p-tag [value]="pokemon.capturado ? 'Sim' : 'Não'" [severity]="pokemon.capturado ? 'success' : 'danger'"></p-tag>
       </td>
       <td>
-        <button pButton icon="pi pi-trash" (click)="remover(pokemon.id)" class="p-button-danger" label="Excluir"></button>
+        <button pButton icon="pi pi-trash" (click)="confirmarRemocao(pokemon)" class="p-button-danger" label="Excluir"></button>
       </td>
       <td>
         <button pButton label="Editar" icon="pi pi-pencil" class="p-button-warning"
@@ -25,3 +29,5 @@
     </tr>
   </ng-template>
 </p-table>
+
+<p-confirmDialog></p-confirmDialog>
