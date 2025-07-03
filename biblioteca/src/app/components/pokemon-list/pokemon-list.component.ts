@@ -42,7 +42,6 @@ export class PokemonListComponent implements OnInit {
   }
 
   remover = (id: number) => {
-    this.pokemonService.remover(id);
     this.carregarPokemons();
   };
 }

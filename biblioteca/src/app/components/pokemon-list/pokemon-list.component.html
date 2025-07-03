@@ -22,7 +22,7 @@
       <td>
   <app-pokemon-delete
     [pokemon]="pokemon"
-    [aoExcluir]="remover">
+    (onDelete)="remover($event)">
   </app-pokemon-delete>
 </td>
       <td>

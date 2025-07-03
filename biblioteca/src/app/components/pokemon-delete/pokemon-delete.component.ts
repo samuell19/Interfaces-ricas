@@ -1,9 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core'; // <- faltava importar EventEmitter
 import { CommonModule } from '@angular/common';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
 import { Pokemon } from '../../models/pokemon.model';
+import { PokemonService } from '../../services/pokemon.service';
 
 @Component({
   selector: 'app-pokemon-delete',
@@ -24,9 +25,9 @@ import { Pokemon } from '../../models/pokemon.model';
 })
 export class PokemonDeleteComponent {
   @Input() pokemon!: Pokemon;
-  @Input() aoExcluir!: (id: number) => void;
+  @Output() onDelete = new EventEmitter<number>();
 
-  constructor(private confirmationService: ConfirmationService) {}
+  constructor(private confirmationService: ConfirmationService, private pokemonService: PokemonService) {}
 
   confirmarRemocao() {
     this.confirmationService.confirm({
@@ -35,7 +36,11 @@ export class PokemonDeleteComponent {
       icon: 'pi pi-exclamation-triangle',
       acceptLabel: 'Sim',
       rejectLabel: 'Não',
-      accept: () => this.aoExcluir(this.pokemon.id),
+      
+      accept: () => {
+        this.pokemonService.remover(this.pokemon.id);
+        this.onDelete.emit(this.pokemon.id)
+      } 
     });
   }
 }
