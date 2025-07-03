@@ -18,7 +18,7 @@ export class PokemonService {
     { id: 10, nome: 'Caterpie', numero_pokedex: 10, tipo: 'Inseto', capturado: false },
     
   ];
-  private nextId = 152;
+  private nextId = 11;
 
   listar(): Pokemon[] {
     return [...this.pokemons];
