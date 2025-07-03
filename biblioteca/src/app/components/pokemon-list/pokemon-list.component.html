@@ -20,8 +20,11 @@
         <p-tag [value]="pokemon.capturado ? 'Sim' : 'Não'" [severity]="pokemon.capturado ? 'success' : 'danger'"></p-tag>
       </td>
       <td>
-        <button pButton icon="pi pi-trash" (click)="confirmarRemocao(pokemon)" class="p-button-danger" label="Excluir"></button>
-      </td>
+  <app-pokemon-delete
+    [pokemon]="pokemon"
+    (onDelete)="remover($event)">
+  </app-pokemon-delete>
+</td>
       <td>
         <button pButton label="Editar" icon="pi pi-pencil" class="p-button-warning"
         [routerLink]="['/editar', pokemon.id]"></button>
