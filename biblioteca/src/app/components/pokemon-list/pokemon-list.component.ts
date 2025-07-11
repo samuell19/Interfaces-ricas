@@ -8,8 +8,7 @@ import { TagModule } from 'primeng/tag';
 import { RouterModule } from '@angular/router';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
-import { PokemonDeleteComponent } from '../pokemon-delete/pokemon-delete.component'; // import do componente novo
-
+import { PokemonDeleteComponent } from '../pokemon-delete/pokemon-delete.component';
 @Component({
   selector: 'app-pokemon-list',
   standalone: true,
@@ -37,8 +36,19 @@ export class PokemonListComponent implements OnInit {
     this.carregarPokemons();
   }
 
+  // ✅ Forma Correta
   carregarPokemons() {
-    this.pokemons = this.pokemonService.listar();
+    this.pokemonService.listar().subscribe({
+      // 'next' é executado quando os dados chegam com sucesso
+      next: (data) => {
+        this.pokemons = data;
+        console.log('Pokémons carregados!', this.pokemons);
+      },
+      // 'error' é executado se ocorrer um erro na requisição
+      error: (err) => {
+        console.error('Erro ao carregar os Pokémons:', err);
+      }
+    });
   }
 
   remover = (id: number) => {
