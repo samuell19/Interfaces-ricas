@@ -13,6 +13,7 @@
 
     <ng-template pTemplate="header">
       <tr>
+        <th>Foto</th>
         <th style="width:10%">Nº Pokedex</th>
         <th>Nome</th>
         <th>Tipo</th>
@@ -23,8 +24,13 @@
 
     <ng-template pTemplate="body" let-pokemon>
       <tr>
+        <td>
+          <img [src]="pokemon.foto" [alt]="pokemon.nome" 
+               style="width: 60px; height: 60px; object-fit: cover; border-radius: 4px;">
+        </td>
         <td>{{ pokemon.numero_pokedex }}</td>
         <td>{{ pokemon.nome }}</td>
+       
         <td><p-tag [value]="pokemon.tipo"></p-tag></td>
         <td>
           <i class="pi" [ngClass]="{ 'pi-check-circle text-green-500': pokemon.capturado, 'pi-times-circle text-red-500': !pokemon.capturado }"></i>

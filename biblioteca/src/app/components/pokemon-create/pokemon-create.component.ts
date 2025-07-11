@@ -29,6 +29,7 @@ export class PokemonCreateComponent {
     numero_pokedex: 0,
     tipo: '',
     capturado: false,
+    foto: ''
     
   };
 

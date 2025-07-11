@@ -4,5 +4,5 @@ export interface Pokemon {
   numero_pokedex: number;
   tipo: string;
   capturado: boolean;
-
+  foto: string; 
 }

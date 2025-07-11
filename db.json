@@ -1,39 +1,44 @@
 {
   "Pokemon": [
     {
-      "id": 1,
-      "nome": "Bulbassauro",
-      "numero_pokedex": 1,
-      "tipo": "planta",
-      "capturado": true
-    },
-    {
-      "id": 2,
+      "id": "1",
       "nome": "ivyssauro",
       "numero_pokedex": 2,
       "tipo": "planta",
-      "capturado": true
+      "capturado": true,
+      "foto": "https://repositorio.sbrauble.com/arquivos/up/pokedex/2.svg"
     },
     {
-      "id": 3,
+      "id": "2",
       "nome": "Venossauro",
       "numero_pokedex": 3,
       "tipo": "planta",
-      "capturado": true
+      "capturado": true,
+      "foto": "https://img.favpng.com/24/9/9/venusaur-pok-mon-go-ash-ketchum-bulbasaur-png-favpng-93D6u63wtF8ARwVfhQa9dMibc.jpg"
     },
     {
-      "id": "5f6b",
-      "nome": "bulba",
-      "numero_pokedex": 10,
-      "tipo": "Dragão",
-      "capturado": false
+      "id": "aa1a",
+      "nome": "dragonite",
+      "numero_pokedex": 151,
+      "tipo": "Elétrico",
+      "capturado": true,
+      "foto": "https://www.pngplay.com/wp-content/uploads/10/Dragonite-Pokemon-No-Background-Clip-Art.png"
     },
     {
-      "id": "c533",
-      "nome": "89",
-      "numero_pokedex": 999,
-      "tipo": "Dragão",
-      "capturado": true
+      "id": "947f",
+      "nome": "charizard",
+      "numero_pokedex": 6,
+      "tipo": "Fogo",
+      "capturado": true,
+      "foto": "https://wallpapers.com/images/hd/pokemon-charizard-lk6d9df0b2cmjdkm.jpg"
+    },
+    {
+      "id": "9919",
+      "nome": "Krokodile",
+      "numero_pokedex": 210,
+      "tipo": "Terra",
+      "capturado": true,
+      "foto": "https://tse1.mm.bing.net/th/id/OIP.QCcPPPSqewQl6iVeuVzijwHaHh?rs=1&pid=ImgDetMain&o=7&rm=3"
     }
   ]
 }
