@@ -1,33 +1,36 @@
 import { Injectable } from '@angular/core';
-import { Pokemon } from '../models/pokemon.model';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { Pokemon } from '../models/pokemon.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PokemonService {
+ 
   private readonly apiUrl = 'http://localhost:3000/Pokemon';
 
   constructor(private http: HttpClient) { }
-  
   listar(): Observable<Pokemon[]> {
     return this.http.get<Pokemon[]>(this.apiUrl);
   }
 
-  adicionar(pokemon: Pokemon): Observable<Pokemon> {
+  buscarPorId(id: number | string): Observable<Pokemon> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.get<Pokemon>(url);
+  }
+
+  adicionar(pokemon: Omit<Pokemon, 'id'>): Observable<Pokemon> {
     return this.http.post<Pokemon>(this.apiUrl, pokemon);
   }
 
   atualizar(pokemon: Pokemon): Observable<Pokemon> {
-    return this.http.put<Pokemon>(`${this.apiUrl}/${pokemon.id}`, pokemon);
+    const url = `${this.apiUrl}/${pokemon.id}`;
+    return this.http.put<Pokemon>(url, pokemon);
   }
 
-  remover(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  remover(id: number | string): Observable<void> {
+    const url = `${this.apiUrl}/${id}`;
+    return this.http.delete<void>(url);
   }
-  
-  buscarPorId(id: number): Observable<Pokemon> {
-    return this.http.get<Pokemon>(`${this.apiUrl}/${id}`);
-  }
-  }
+}

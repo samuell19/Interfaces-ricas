@@ -1,34 +1,34 @@
-  <div class="p-fluid">
-  <div class="p-field">
-    <label for="nome">Nome</label>
-    <input id="nome" pInputText [(ngModel)]="pokemon.nome" />
-  </div>
+<p-toast></p-toast>
 
-  <div class="p-field">
-    <label for="numero_pokedex">Número da Pokédex</label>
-    <input id="numero_pokedex" pInputText type="number" [(ngModel)]="pokemon.numero_pokedex" />
-  </div>
+<p-card [header]="isEditMode ? 'Editar Pokémon' : 'Novo Pokémon'">
+  <form #pokemonForm="ngForm" (ngSubmit)="salvar()">
+    <div class="p-fluid grid">
+      <div class="field col-12 md:col-6">
+        <label for="nome">Nome</label>
+        <input pInputText id="nome" name="nome" [(ngModel)]="pokemon.nome" required />
+      </div>
 
-  <div class="p-field">
-    <label for="tipo">Tipo</label>
-    <p-dropdown
-      inputId="tipo"
-      [options]="tipos"
-      [(ngModel)]="pokemon.tipo"
-      optionLabel="name"
-      optionValue="value"
-      [filter]="true"
-      filterBy="name"
-      [showClear]="true"
-      placeholder="Selecione um tipo"
-      class="w-full">
-    </p-dropdown>
-  </div>
+      <div class="field col-12 md:col-6">
+        <label for="numero_pokedex">Nº Pokédex</label>
+        <p-inputNumber id="numero_pokedex" name="numero_pokedex" [(ngModel)]="pokemon.numero_pokedex" required>
+        </p-inputNumber>
+      </div>
 
-  <div class="p-field-checkbox mt-3">
-    <p-checkbox [(ngModel)]="pokemon.capturado" binary="true" inputId="capturado"></p-checkbox>
-    <label for="capturado" class="ml-2">Capturado</label>
-  </div>
+      <div class="field col-12 md:col-6">
+        <label for="tipo">Tipo</label>
+        <p-dropdown id="tipo" name="tipo" [options]="tipos" [(ngModel)]="pokemon.tipo" placeholder="Selecione um tipo" required>
+        </p-dropdown>
+      </div>
 
-  <button pButton label="Salvar" (click)="salvar()" class="p-button-success mt-4" ></button>
-</div>
+      <div class="field col-12 md:col-6 flex align-items-center">
+        <p-checkbox id="capturado" name="capturado" [(ngModel)]="pokemon.capturado" [binary]="true"></p-checkbox>
+        <label for="capturado" class="ml-2">Capturado?</label>
+      </div>
+    </div>
+
+    <div class="flex justify-content-end gap-2 mt-4">
+      <button pButton type="button" label="Cancelar" class="p-button-secondary" routerLink="/lista"></button>
+      <button pButton type="submit" [label]="isEditMode ? 'Atualizar' : 'Salvar'" [disabled]="pokemonForm.invalid"></button>
+    </div>
+  </form>
+</p-card>

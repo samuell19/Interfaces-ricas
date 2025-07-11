@@ -1,36 +1,48 @@
-<p-table [value]="pokemons">
-  <ng-template pTemplate="header">
-    <tr>
-      <th>ID</th>
-      <th>Nome</th>
-      <th>Tipo</th>
-      <th>Número na Pokédex</th>
-      <th>Capturado</th>
-      <th>Excluir</th>
-      <th>Editar</th>
-    </tr>
-  </ng-template>
-  <ng-template pTemplate="body" let-pokemon>
-    <tr>
-      <td>{{pokemon.id}}</td>
-      <td>{{pokemon.nome}}</td>
-      <td>{{pokemon.tipo}}</td>
-      <td>{{pokemon.numero_pokedex}}</td>
-      <td>
-        <p-tag [value]="pokemon.capturado ? 'Sim' : 'Não'" [severity]="pokemon.capturado ? 'success' : 'danger'"></p-tag>
-      </td>
-      <td>
-  <app-pokemon-delete
-    [pokemon]="pokemon"
-    (onDelete)="remover($event)">
-  </app-pokemon-delete>
-</td>
-      <td>
-        <button pButton label="Editar" icon="pi pi-pencil" class="p-button-warning"
-        [routerLink]="['/editar', pokemon.id]"></button>
-      </td>
-    </tr>
-  </ng-template>
-</p-table>
+<div class="card">
+  <p-toast></p-toast>
+  <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
 
-<p-confirmDialog></p-confirmDialog>
+  <p-table [value]="pokemons" [tableStyle]="{ 'min-width': '50rem' }" responsiveLayout="scroll">
+    <ng-template pTemplate="caption">
+      <div class="flex justify-content-end">
+        <a routerLink="/novo">
+          <button pButton label="Novo Pokémon" icon="pi pi-plus"></button>
+        </a>
+      </div>
+    </ng-template>
+
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width:10%">Nº Pokedex</th>
+        <th>Nome</th>
+        <th>Tipo</th>
+        <th style="width:10%">Capturado</th>
+        <th style="width:15%">Ações</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-pokemon>
+      <tr>
+        <td>{{ pokemon.numero_pokedex }}</td>
+        <td>{{ pokemon.nome }}</td>
+        <td><p-tag [value]="pokemon.tipo"></p-tag></td>
+        <td>
+          <i class="pi" [ngClass]="{ 'pi-check-circle text-green-500': pokemon.capturado, 'pi-times-circle text-red-500': !pokemon.capturado }"></i>
+        </td>
+        <td>
+          <div class="flex gap-2">
+            <a [routerLink]="['/editar', pokemon.id]">
+              <button pButton type="button" icon="pi pi-pencil" class="p-button-info"></button>
+            </a>
+            <app-pokemon-delete [pokemon]="pokemon" (onDelete)="remover($event)"></app-pokemon-delete>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage">
+        <tr>
+            <td colspan="5">Nenhum Pokémon encontrado.</td>
+        </tr>
+    </ng-template>
+  </p-table>
+</div>
