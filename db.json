@@ -39,6 +39,14 @@
       "tipo": "Terra",
       "capturado": true,
       "foto": "https://tse1.mm.bing.net/th/id/OIP.QCcPPPSqewQl6iVeuVzijwHaHh?rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+      "id": "71c0",
+      "nome": "mewtwo",
+      "numero_pokedex": 159,
+      "tipo": "Dragão",
+      "capturado": true,
+      "foto": "afs"
     }
   ]
 }
