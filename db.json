@@ -3,7 +3,7 @@
     {
       "id": "1",
       "nome": "ivyssauro",
-      "numero_pokedex": 2,
+      "numero_pokedex": 3,
       "tipo": "planta",
       "capturado": true,
       "foto": "https://repositorio.sbrauble.com/arquivos/up/pokedex/2.svg"
@@ -47,6 +47,22 @@
       "tipo": "Dragão",
       "capturado": true,
       "foto": "afs"
+    },
+    {
+      "id": "8ea6",
+      "nome": "mewtwo",
+      "numero_pokedex": 1,
+      "tipo": "Dragão",
+      "capturado": true,
+      "foto": "dsa"
+    },
+    {
+      "id": "12f7",
+      "nome": "goku",
+      "numero_pokedex": 8686,
+      "tipo": "Dragão",
+      "capturado": true,
+      "foto": "https://tse3.mm.bing.net/th/id/OIP.GKtlrlP4e_bGOtnsqBz-4wHaLo?rs=1&pid=ImgDetMain&o=7&rm=3"
     }
   ]
 }

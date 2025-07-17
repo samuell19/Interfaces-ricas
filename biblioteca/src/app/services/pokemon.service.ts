@@ -8,7 +8,7 @@ import { Pokemon } from '../models/pokemon.model';
 })
 export class PokemonService {
  
-  private readonly apiUrl = 'https://refactored-space-waffle-jj4gjrg5pj6pcqqwv-3000.app.github.dev/Pokemon';
+  private readonly apiUrl = 'http://localhost:3000/Pokemon';
 
   constructor(private http: HttpClient) { }
   listar(): Observable<Pokemon[]> {
