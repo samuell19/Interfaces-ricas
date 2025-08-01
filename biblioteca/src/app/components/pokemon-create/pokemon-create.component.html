@@ -1,32 +1,72 @@
 <p-toast></p-toast>
 
 <p-card header="Novo Pokémon">
-  <form #pokemonForm="ngForm" (ngSubmit)="salvar()">
+  <form [formGroup]="pokemonForm" (ngSubmit)="salvar()">
     <div class="p-fluid grid">
       <div class="field col-12 md:col-6">
-        <label for="nome">Nome</label>
-        <input pInputText id="nome" name="nome" [(ngModel)]="pokemon.nome" required />
+        <label for="nome">Nome *</label>
+        <input 
+          pInputText 
+          id="nome" 
+          formControlName="nome"
+          [class.ng-invalid]="pokemonForm.get('nome')?.invalid && pokemonForm.get('nome')?.touched" />
+        <small 
+          *ngIf="pokemonForm.get('nome')?.invalid && pokemonForm.get('nome')?.touched" 
+          class="p-error">
+          <span *ngIf="pokemonForm.get('nome')?.errors?.['required']">Nome é obrigatório</span>
+          <span *ngIf="pokemonForm.get('nome')?.errors?.['minlength']">Nome deve ter pelo menos 2 caracteres</span>
+        </small>
       </div>
 
       <div class="field col-12 md:col-6">
-        <label for="numero_pokedex">Nº Pokédex</label>
-        <p-inputNumber id="numero_pokedex" name="numero_pokedex" [(ngModel)]="pokemon.numero_pokedex" required></p-inputNumber>
+        <label for="numero_pokedex">Nº Pokédex *</label>
+        <p-inputNumber 
+          id="numero_pokedex" 
+          formControlName="numero_pokedex"
+          [min]="1"
+          [class.ng-invalid]="pokemonForm.get('numero_pokedex')?.invalid && pokemonForm.get('numero_pokedex')?.touched">
+        </p-inputNumber>
+        <small 
+          *ngIf="pokemonForm.get('numero_pokedex')?.invalid && pokemonForm.get('numero_pokedex')?.touched" 
+          class="p-error">
+          <span *ngIf="pokemonForm.get('numero_pokedex')?.errors?.['required']">Número é obrigatório</span>
+          <span *ngIf="pokemonForm.get('numero_pokedex')?.errors?.['min']">Número deve ser maior que 0</span>
+        </small>
       </div>
 
       <div class="field col-12 md:col-6">
-        <label for="foto">Copie o endereço da foto do pokémon</label>
-        <input pInputText id="foto" name="foto" [(ngModel)]="pokemon.foto" required />
+        <label for="foto">Copie o endereço da foto do pokémon *</label>
+        <input 
+          pInputText 
+          id="foto" 
+          formControlName="foto"
+          [class.ng-invalid]="pokemonForm.get('foto')?.invalid && pokemonForm.get('foto')?.touched" />
+        <small 
+          *ngIf="pokemonForm.get('foto')?.invalid && pokemonForm.get('foto')?.touched" 
+          class="p-error">
+          Foto é obrigatória
+        </small>
       </div>
 
       <div class="field col-12 md:col-6">
-        <label for="tipo">Tipo</label>
-        <p-dropdown id="tipo" name="tipo" [options]="tipos" [(ngModel)]="pokemon.tipo" placeholder="Selecione um tipo" required></p-dropdown>
+        <label for="tipo">Tipo *</label>
+        <p-dropdown 
+          id="tipo" 
+          formControlName="tipo"
+          [options]="tipos" 
+          placeholder="Selecione um tipo"
+          [class.ng-invalid]="pokemonForm.get('tipo')?.invalid && pokemonForm.get('tipo')?.touched">
+        </p-dropdown>
+        <small 
+          *ngIf="pokemonForm.get('tipo')?.invalid && pokemonForm.get('tipo')?.touched" 
+          class="p-error">
+          Tipo é obrigatório
+        </small>
       </div>
-      
       
 
       <div class="field col-12 md:col-6 flex align-items-center">
-        <p-checkbox id="capturado" name="capturado" [(ngModel)]="pokemon.capturado" [binary]="true"></p-checkbox>
+        <p-checkbox id="capturado" formControlName="capturado" [binary]="true"></p-checkbox>
         <label for="capturado" class="ml-2">Capturado?</label>
       </div>
     </div>

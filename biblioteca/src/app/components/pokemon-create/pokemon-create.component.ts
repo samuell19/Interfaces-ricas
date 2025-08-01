@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Pokemon } from '../../models/pokemon.model';
@@ -17,21 +17,14 @@ import { CardModule } from 'primeng/card';
   selector: 'app-pokemon-create',
   standalone: true,
   imports: [
-    CommonModule, FormsModule, InputTextModule, InputNumberModule,
+    CommonModule, ReactiveFormsModule, InputTextModule, InputNumberModule,
     CheckboxModule, ButtonModule, DropdownModule, ToastModule, CardModule
   ],
   templateUrl: './pokemon-create.component.html',
   providers: [MessageService]
 })
 export class PokemonCreateComponent {
-  pokemon: Omit<Pokemon, 'id'> = {
-    nome: '',
-    numero_pokedex: 0,
-    tipo: '',
-    capturado: false,
-    foto: ''
-    
-  };
+  pokemonForm: FormGroup;
 
   tipos = [
     { label: 'Água', value: 'Água' }, { label: 'Dragão', value: 'Dragão' },
@@ -47,19 +40,33 @@ export class PokemonCreateComponent {
   constructor(
     private pokemonService: PokemonService,
     private router: Router,
-    private messageService: MessageService
-  ) {}
+    private messageService: MessageService,
+    private fb: FormBuilder
+  ) {
+    this.pokemonForm = this.fb.group({
+      nome: ['', [Validators.required, Validators.minLength(2)]],
+      numero_pokedex: [0, [Validators.required, Validators.min(1)]],
+      tipo: ['', Validators.required],
+      capturado: [false],
+      foto: ['', Validators.required]
+    });
+  }
 
   salvar() {
-    this.pokemonService.adicionar(this.pokemon).subscribe({
-      next: () => {
-        this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Pokémon criado!' });
-        this.router.navigate(['/lista']);
-      },
-      error: (err) => {
-        this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Falha ao criar o Pokémon.' });
-        console.error(err);
-      }
-    });
+    if (this.pokemonForm.valid) {
+      const pokemon: Omit<Pokemon, 'id'> = this.pokemonForm.value;
+      this.pokemonService.adicionar(pokemon).subscribe({
+        next: () => {
+          this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Pokémon criado!' });
+          this.router.navigate(['/lista']);
+        },
+        error: (err) => {
+          this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Falha ao criar o Pokémon.' });
+          console.error(err);
+        }
+      });
+    } else {
+      this.messageService.add({ severity: 'warn', summary: 'Atenção', detail: 'Por favor, preencha todos os campos obrigatórios.' });
+    }
   }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Pokemon } from '../../models/pokemon.model';
@@ -17,14 +17,15 @@ import { CardModule } from 'primeng/card';
   selector: 'app-pokemon-edit',
   standalone: true,
   imports: [
-    CommonModule, FormsModule, InputTextModule, InputNumberModule,
+    CommonModule, ReactiveFormsModule, InputTextModule, InputNumberModule,
     CheckboxModule, ButtonModule, DropdownModule, ToastModule, CardModule
   ],
   templateUrl: './pokemon-edit.component.html',
   providers: [MessageService]
 })
 export class PokemonEditComponent implements OnInit {
-  pokemon: Pokemon | undefined;
+  pokemonForm: FormGroup;
+  pokemonId: string | null = null;
 
   tipos = [
     { label: 'Água', value: 'Água' }, { label: 'Dragão', value: 'Dragão' },
@@ -41,13 +42,25 @@ export class PokemonEditComponent implements OnInit {
     private pokemonService: PokemonService,
     private route: ActivatedRoute,
     private router: Router,
-    private messageService: MessageService
-  ) {}
+    private messageService: MessageService,
+    private fb: FormBuilder
+  ) {
+    this.pokemonForm = this.fb.group({
+      id: [0],
+      nome: ['', [Validators.required, Validators.minLength(2)]],
+      numero_pokedex: [0, [Validators.required, Validators.min(1)]],
+      tipo: ['', Validators.required],
+      capturado: [false],
+      foto: ['', Validators.required]
+    });
+  }
 
   ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    this.pokemonService.buscarPorId(id!).subscribe({
-      next: (data) => this.pokemon = data,
+    this.pokemonId = this.route.snapshot.paramMap.get('id');
+    this.pokemonService.buscarPorId(this.pokemonId!).subscribe({
+      next: (data) => {
+        this.pokemonForm.patchValue(data);
+      },
       error: (err) => {
         this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Não foi possível carregar o Pokémon.' });
         console.error(err);
@@ -56,15 +69,20 @@ export class PokemonEditComponent implements OnInit {
   }
 
   salvar() {
-    this.pokemonService.atualizar(this.pokemon!).subscribe({
-      next: () => {
-        this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Pokémon atualizado!' });
-        this.router.navigate(['/lista']);
-      },
-      error: (err) => {
-        this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Falha ao atualizar o Pokémon.' });
-        console.error(err);
-      }
-    });
+    if (this.pokemonForm.valid) {
+      const pokemon: Pokemon = this.pokemonForm.value;
+      this.pokemonService.atualizar(pokemon).subscribe({
+        next: () => {
+          this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Pokémon atualizado!' });
+          this.router.navigate(['/lista']);
+        },
+        error: (err) => {
+          this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Falha ao atualizar o Pokémon.' });
+          console.error(err);
+        }
+      });
+    } else {
+      this.messageService.add({ severity: 'warn', summary: 'Atenção', detail: 'Por favor, preencha todos os campos obrigatórios.' });
+    }
   }
 }

@@ -63,6 +63,14 @@
       "tipo": "Dragão",
       "capturado": true,
       "foto": "https://tse3.mm.bing.net/th/id/OIP.GKtlrlP4e_bGOtnsqBz-4wHaLo?rs=1&pid=ImgDetMain&o=7&rm=3"
+    },
+    {
+      "id": "560d",
+      "nome": "novo",
+      "numero_pokedex": 6,
+      "tipo": "Dragão",
+      "capturado": true,
+      "foto": "https://legends.pokemon.com/_next/image?url=%2Fstatic-assets%2Fcontent%2Fpokemon-images%2Fmega-dragonite-square-2x.png&w=1080&q=75"
     }
   ]
 }
