@@ -1,0 +1,31 @@
+<div class="container">
+  <form action="#">
+    <h2>Login-form</h2>
+    <div class="input-field">
+      <input type="text" [(ngModel)]="login_obj.username" name="username" required />
+      <label>Enter email</label>
+    </div>
+    <div class="input-field">
+      <input type="password" [(ngModel)]="login_obj.password" name="password" required />
+      <label>Enter password</label>
+    </div>
+    <div class="forget">
+      <label for="Save-login">
+        <input type="checkbox" id="Save-login" />
+        <p>Save login information</p>
+      </label>
+      <a href="#">Forgot password?</a>
+    </div>
+    <button type="submit" (click)="onLogin()">Log In</button>
+    <div class="Create-account">
+      <p>Don't have an account? <a href="#">Create account</a></p>
+    </div>
+  </form>
+</div>
+
+
+
+<!-- /* Support me */ -->
+<a id="support" href="https://www.buymeacoffee.com/imstark202u" target="_blank"><img
+    src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee"
+    style="height: 60px !important;width: 217px !important;"></a>
