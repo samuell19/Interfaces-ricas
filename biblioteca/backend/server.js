@@ -119,3 +119,5 @@ app.delete('/Pokemon/:id', verificarToken, (req, res) => {
 app.listen(PORT, () => {
   console.log(`API do Pokemon rodando em http://localhost:${PORT}`);
 });
+
+
