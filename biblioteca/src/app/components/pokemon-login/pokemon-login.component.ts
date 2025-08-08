@@ -1,50 +1,52 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { HttpClient } from '@angular/common/http';
-
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-pokemon-login',
-  imports: [FormsModule],
+  standalone: true,
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './pokemon-login.component.html',
   styleUrls: ['./pokemon-login.component.css'],
   encapsulation: ViewEncapsulation.None
 })
 export class PokemonLoginComponent {
-  login_obj = {
-    username: '',
-    password: ''
-  };
-
+  loginForm: FormGroup;
   loading = false;
-  constructor(private router: Router, private auth: AuthService, private http: HttpClient) {}
+
+  constructor(
+    private formBuilder: FormBuilder, private router: Router, private auth: AuthService
+  ) {
+    this.loginForm = this.formBuilder.group({
+      username: ['', [Validators.required]],
+      password: ['', [Validators.required]]
+    });
+  }
 
   onLogin() {
-  this.loading = true;
+    if (this.loginForm.invalid) return;
 
-  this.http.post<{ token?: string, message?: string }>(
-    "https://biblioteca-pokemon-api.herokuapp.com/login",
-    this.login_obj
-  ).subscribe({
-    next: (res) => {
-      this.loading = false;
-
-      if (res.token) {
-        this.auth.salvarToken(res.token);  // Salva o JWT
-        this.router.navigate(['/lista']);  // Redireciona após login
-      } else if (res.message) {
-        alert(res.message);                // Mostra mensagem do backend (ex: erro de login)
-      } else {
-        alert('Resposta do servidor inesperada');  // Caso o formato da resposta seja estranho
+    this.loading = true;
+    const { username, password } = this.loginForm.value;
+    this.auth.login(username, password).subscribe({
+      next: (res) => {
+        this.loading = false;
+        if (res.token) {
+          this.auth.salvarToken(res.token);
+          console.log('Token JWT recebido:', res.token);
+          this.auth.logarConteudoToken();
+          this.router.navigate(['/lista']);
+        } else {
+          alert(res.message || 'Resposta inesperada do servidor.');
+        }
+      },
+      error: (err) => {
+        this.loading = false;
+        console.error(err);
+        alert(err?.error?.error || 'Erro desconhecido ao tentar fazer login.');
       }
-    },
-    error: (err) => {
-      this.loading = false;
-      console.error(err);
-      alert(err?.error?.error || 'Erro desconhecido ao tentar fazer login');
-    }
-  });
-}
+    });
+  }
 }

@@ -10,9 +10,8 @@ app.use(express.json());
 
 const DB_PATH = path.join(__dirname, 'db.json');
 const PORT = 3000;
-const SECRET_KEY = 'segredo-muito-seguro'; // Troque por uma chave secreta forte
+const SECRET_KEY = 'segredo-secreto'; 
 
-// ===== Funções utilitárias =====
 function readDB() {
   try {
     const raw = fs.readFileSync(DB_PATH, 'utf8');
@@ -26,8 +25,6 @@ function readDB() {
 function writeDB(db) {
   fs.writeFileSync(DB_PATH, JSON.stringify(db, null, 2), 'utf8');
 }
-
-// ===== Middleware para verificar JWT =====
 function verificarToken(req, res, next) {
   const authHeader = req.headers['authorization'];
   if (!authHeader) return res.status(401).json({ error: 'Token não fornecido' });
@@ -40,7 +37,6 @@ function verificarToken(req, res, next) {
   });
 }
 
-// ===== Rota de Login =====
 app.post('/login', (req, res) => {
   const { nome, senha } = req.body;
   const db = readDB();
@@ -50,17 +46,16 @@ app.post('/login', (req, res) => {
     return res.status(401).json({ error: 'Usuário ou senha incorretos' });
   }
 
-  // Gera JWT com payload contendo id e nome do usuário
+
   const token = jwt.sign(
     { id: usuario.id, nome: usuario.nome },
     SECRET_KEY,
-    { expiresIn: '1h' } // expira em 1 hora
+    { expiresIn: '1h' } 
   );
 
   res.json({ token });
 });
 
-// ===== Rotas de Pokemon (protegidas) =====
 app.get('/Pokemon', verificarToken, (req, res) => {
   const db = readDB();
   res.json(db.Pokemon || []);
@@ -115,7 +110,6 @@ app.delete('/Pokemon/:id', verificarToken, (req, res) => {
   res.status(204).send();
 });
 
-// ===== Iniciar servidor =====
 app.listen(PORT, () => {
   console.log(`API do Pokemon rodando em http://localhost:${PORT}`);
 });
