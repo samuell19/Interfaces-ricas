@@ -1,0 +1,35 @@
+<div class="container">
+  <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+    <h2>Login-form</h2>
+    <div class="input-field">
+      <input type="text" formControlName="username" required />
+      <label>Enter email</label>
+      <div *ngIf="loginForm.get('username')?.invalid && loginForm.get('username')?.touched" class="error">
+        <small>Usuário obrigatório</small>
+      </div>
+    </div>
+    <div class="input-field">
+      <input type="password" formControlName="password" required />
+      <label>Enter password</label>
+      <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="error">
+        <small>Senha obrigatória</small>
+      </div>
+    </div>
+    <div class="forget">
+      <label for="Save-login">
+        <input type="checkbox" id="Save-login" />
+        <p>Save login information</p>
+      </label>
+      <a href="#">Forgot password?</a>
+    </div>
+    <button type="submit">Log In</button>
+    <div class="Create-account">
+      <p>Don't have an account? <a href="#">Create account</a></p>
+    </div>
+  </form>
+</div>
+
+<!-- /* Support me */ -->
+<a id="support" href="https://www.buymeacoffee.com/imstark202u" target="_blank"><img
+    src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee"
+    style="height: 60px !important;width: 217px !important;"></a>

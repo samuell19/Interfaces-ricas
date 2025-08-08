@@ -6,3 +6,8 @@ export interface Pokemon {
   capturado: boolean;
   foto: string; 
 }
+export interface Usuario {
+  id: number;
+  nome: string;      
+  senha: string;      
+}
